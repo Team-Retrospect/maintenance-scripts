@@ -6,16 +6,8 @@ import json
 
 API_CLUSTER = ['cassandra.xadi.io']
 KEYSPACE = 'retrospect'
-DAYS_TO_RETAIN = 7
-
-BATCH_STATEMENT = """\
-BEGIN BATCH
-{0}
-APPLY BATCH;\
-"""
 
 QUERY_DB_SPANS = "SELECT JSON * FROM db_span_buffer;"
-
 QUERY_FIND_ACTUAL_VALUES = "\
 SELECT session_id, user_id, chapter_id, trigger_route \
 FROM spans \
