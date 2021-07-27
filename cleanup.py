@@ -1,11 +1,11 @@
-#!/bin/python
+#!/bin/python3
 
 from cassandra.cluster import Cluster
 from datetime import datetime, timedelta
 
 API_CLUSTER = ['cassandra.xadi.io']
 KEYSPACE = 'project'
-DAYS_TO_RETAIN = 1
+DAYS_TO_RETAIN = 7
 
 CUTOFF = (datetime.now() - timedelta(days = DAYS_TO_RETAIN)).timestamp()
 
@@ -29,19 +29,17 @@ DELETE FROM snapshots   WHERE session_id IN ('{0}');
 def cleanse_spans(session):
     ids = {}
     rows = session.execute('SELECT session_id, time_sent FROM spans;')
-    counter = 0
     for row in rows:
         delta = (row.time_sent / 10**6)
-        if CUTOFF > (row.time_sent / 10**6) :
+        if CUTOFF > delta :
             ids[row.session_id] = True
-        counter += 1
 
     # commands = "".join([DELETE_STATEMENT.format(i) for i in ids])
     commands = DELETE_STATEMENT.format("', '".join(ids.keys()))
     batch = BATCH_STATEMENT.format(commands)
 
-    print(batch)
-    # session.execute(batch)
+    # print(batch)
+    session.execute(batch)
 
 if __name__ == "__main__":
     cluster = Cluster(API_CLUSTER,port=9042)
