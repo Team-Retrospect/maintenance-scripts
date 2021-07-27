@@ -1,4 +1,4 @@
-#!/bin/python
+#!/bin/python3
 
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
@@ -26,7 +26,7 @@ def get_db_spans(session):
         db_spans[span_id] = values
         # find correct session_id, user_id, chapter_id, trigger_route
         query = QUERY_FIND_ACTUAL_VALUES.format(values['trace_id'])
-        actual = session.execute(query)[0]
+        actual = session.execute(query).one()
 
         # update values
         values['session_id'] = actual['session_id']
