@@ -28,6 +28,10 @@ def get_db_spans(session):
         query = QUERY_FIND_ACTUAL_VALUES.format(values['trace_id'])
         actual = session.execute(query).one()
 
+        if actual is None :
+            print("-> no actual values found: skipping!")
+            next
+
         # update values
         values['session_id'] = actual['session_id']
         values['user_id'] = actual['user_id']
