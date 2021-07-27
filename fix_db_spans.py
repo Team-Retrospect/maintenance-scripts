@@ -30,7 +30,7 @@ def get_db_spans(session):
 
         if actual is None :
             print("-> no actual values found: skipping!")
-            next
+            continue
 
         # update values
         values['session_id'] = actual['session_id']
