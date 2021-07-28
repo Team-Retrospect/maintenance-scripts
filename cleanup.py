@@ -4,7 +4,7 @@ from cassandra.cluster import Cluster
 from datetime import datetime, timedelta
 
 API_CLUSTER = ['cassandra.xadi.io']
-KEYSPACE = 'project'
+KEYSPACE = 'retrospect'
 DAYS_TO_RETAIN = 7
 
 CUTOFF = (datetime.now() - timedelta(days = DAYS_TO_RETAIN)).timestamp()
