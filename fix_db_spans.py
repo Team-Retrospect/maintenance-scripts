@@ -3,8 +3,14 @@
 from cassandra.cluster import Cluster
 from cassandra.query import dict_factory
 import json
+import os
+import yaml
 
-API_CLUSTER = ['cassandra.xadi.io']
+working_dir = os.path.dirname(__file__)
+filename = os.path.join(working_dir, 'config.yml')
+with open(filename, r) as fh :
+    data = yaml.load(fh, Loader=yaml.FullLoader)
+    API_CLUSTER = data['cluster']
 KEYSPACE = 'retrospect'
 
 QUERY_DB_SPANS = "SELECT JSON * FROM db_span_buffer;"
@@ -44,7 +50,6 @@ def get_db_spans(session):
         # insert into spans
         query = QUERY_INSERT_NEW.format(json.dumps(values))
         session.execute(query)
-        # print(query)
 
         # delete from buffer
         query = QUERY_DELETE.format(span_id)

@@ -1,0 +1,4 @@
+cluster:
+  - "some.ip.goes.here"
+
+retention_days: 7

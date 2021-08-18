@@ -2,10 +2,16 @@
 
 from cassandra.cluster import Cluster
 from datetime import datetime, timedelta
+import os
+import yaml
 
-API_CLUSTER = ['cassandra.xadi.io']
+working_dir = os.path.dirname(__file__)
+filename = os.path.join(working_dir, 'config.yml')
+with open(filename, r) as fh :
+    data = yaml.load(fh, Loader=yaml.FullLoader)
+    API_CLUSTER = data['cluster']
+    DAYS_TO_RETAIN = data['retention_days']
 KEYSPACE = 'retrospect'
-DAYS_TO_RETAIN = 7
 
 CUTOFF = (datetime.now() - timedelta(days = DAYS_TO_RETAIN)).timestamp()
 
