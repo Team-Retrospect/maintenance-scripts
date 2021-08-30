@@ -9,7 +9,7 @@ There are 2 maintenance scripts and a yaml file. Setup:
 
 ## Requirements:
 
-Run these to install Python (which needs superuser privilegesif not already installed), and then install the cassandra-driver and pyyaml packages.
+Run these to install Python (which needs superuser privileges if not already installed), and then install the cassandra-driver and pyyaml packages.
 
 ```sh
 apt-get install python3
